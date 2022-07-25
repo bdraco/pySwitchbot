@@ -104,6 +104,22 @@ def _process_wosensorth(data: bytes) -> dict[str, object]:
     return _wosensorth_data
 
 
+def _process_wocontactsensor(
+    data: bytes, reverse: bool = True
+) -> dict[str, bool | int]:
+    """Process woContactSensor/Contact Sensor services data."""
+    return {
+        "tested": bool(data[1] & 0b00000010),
+        "pir_state": bool(
+            data[1] & 0b00000100
+        ),  # PIR State 0: No one moves 1: Someone is moving
+        "battery": data[2] & 0b01111111,
+        "hal_state": data[3]
+        & 0b01100000,  # Hal State 0:door close 1:door open 2:timeout not close
+        "is_light": data[3] & 0b10000000,
+    }
+
+
 @dataclass
 class SwitchBotAdvertisement:
     """Switchbot advertisement."""
@@ -124,6 +140,7 @@ def parse_advertisement_data(
     _model = chr(_service_data[0] & 0b01111111)
 
     supported_types: dict[str, dict[str, Any]] = {
+        "d": {"modelName": "WoContactSensor", "func": _process_wocontactsensor},
         "H": {"modelName": "WoHand", "func": _process_wohand},
         "c": {"modelName": "WoCurtain", "func": _process_wocurtain},
         "T": {"modelName": "WoSensorTH", "func": _process_wosensorth},
@@ -229,6 +246,10 @@ class GetSwitchbotDevices:
     async def get_tempsensors(self) -> dict[str, SwitchBotAdvertisement]:
         """Return all WoSensorTH/Temp sensor devices with services data."""
         return await self._get_devices_by_model("T")
+
+    async def get_contactsensors(self) -> dict[str, SwitchBotAdvertisement]:
+        """Return all WoContactSensor/Contact sensor devices with services data."""
+        return await self._get_devices_by_model("d")
 
     async def get_device_data(
         self, address: str
