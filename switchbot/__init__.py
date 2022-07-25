@@ -104,15 +104,31 @@ def _process_wosensorth(data: bytes) -> dict[str, object]:
     return _wosensorth_data
 
 
-def _process_wocontactsensor(
-    data: bytes, reverse: bool = True
-) -> dict[str, bool | int]:
+def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
     """Process woContactSensor/Contact Sensor services data."""
+    _LOGGER.debug("contact_data: %s", data)
+    _LOGGER.debug("contact_data: byte0=%s", data[0])
+    _LOGGER.debug("contact_data: byte1=%s", data[1])
+    _LOGGER.debug("contact_data: byte2=%s", data[2])
+    _LOGGER.debug("contact_data: byte3=%s", data[3])
+    _LOGGER.debug("contact_data: byte3.0=%s", data[3] & 0b10000000)
+    _LOGGER.debug("contact_data: byte3.1=%s", data[3] & 0b01000000)
+    _LOGGER.debug("contact_data: byte3.2=%s", data[3] & 0b00100000)
+    _LOGGER.debug("contact_data: byte3.3=%s", data[3] & 0b00010000)
+    _LOGGER.debug("contact_data: byte3.4=%s", data[3] & 0b00001000)
+    _LOGGER.debug("contact_data: byte3.5=%s", data[3] & 0b00000100)
+    _LOGGER.debug("contact_data: byte3.6=%s", data[3] & 0b00000010)
+    _LOGGER.debug("contact_data: byte3.7=%s", data[3] & 0b00000001)
+
+    _LOGGER.debug("contact_data: byte4=%s", data[4])
+    _LOGGER.debug("contact_data: byte5=%s", data[5])
+    _LOGGER.debug("contact_data: byte6=%s", data[6])
+    _LOGGER.debug("contact_data: byte7=%s", data[7])
     return {
         "tested": bool(data[1] & 0b00000010),
         "motion_detected": bool(data[1] & 0b00000100),
         "battery": data[2] & 0b01111111,
-        "door_open": data[3] & 0b01100000 == 0b00100000,
+        "door_open": data[3] & 0b01100000 == 0b01000000,
         "door_timeout": data[3] & 0b01100000 == 0b01100000,
         "is_light": bool(data[3] & 0b10000000),
     }
