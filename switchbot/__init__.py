@@ -106,42 +106,6 @@ def _process_wosensorth(data: bytes) -> dict[str, object]:
 
 def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
     """Process woContactSensor/Contact Sensor services data."""
-    _LOGGER.debug("contact_data: %s", data)
-    _LOGGER.debug("contact_data: byte0=%s", data[0])
-    _LOGGER.debug("contact_data: byte1=%s", data[1])
-    _LOGGER.debug("contact_data: byte1.0=%s", data[1] & 0b10000000)
-    _LOGGER.debug("contact_data: byte1.1=%s", data[1] & 0b01000000)
-    _LOGGER.debug("contact_data: byte1.2=%s", data[1] & 0b00100000)
-    _LOGGER.debug("contact_data: byte1.3=%s", data[1] & 0b00010000)
-    _LOGGER.debug("contact_data: byte1.4=%s", data[1] & 0b00001000)
-    _LOGGER.debug("contact_data: byte1.5=%s", data[1] & 0b00000100)
-    _LOGGER.debug("contact_data: byte1.6=%s", data[1] & 0b00000010)
-    _LOGGER.debug("contact_data: byte1.7=%s", data[1] & 0b00000001)
-
-    _LOGGER.debug("contact_data: byte2=%s", data[2])
-    _LOGGER.debug("contact_data: byte3=%s", data[3])
-    _LOGGER.debug("contact_data: byte3.0=%s", data[3] & 0b10000000)
-    _LOGGER.debug("contact_data: byte3.1=%s", data[3] & 0b01000000)
-    _LOGGER.debug("contact_data: byte3.2=%s", data[3] & 0b00100000)
-    _LOGGER.debug("contact_data: byte3.3=%s", data[3] & 0b00010000)
-    _LOGGER.debug("contact_data: byte3.4=%s", data[3] & 0b00001000)
-    _LOGGER.debug("contact_data: byte3.5=%s", data[3] & 0b00000100)
-    _LOGGER.debug("contact_data: byte3.6=%s", data[3] & 0b00000010)
-    _LOGGER.debug("contact_data: byte3.7=%s", data[3] & 0b00000001)
-
-    _LOGGER.debug("contact_data: byte4=%s", data[4])
-    _LOGGER.debug("contact_data: byte5=%s", data[5])
-    _LOGGER.debug("contact_data: byte6=%s", data[6])
-    _LOGGER.debug("contact_data: byte7=%s", data[7])
-
-    _LOGGER.debug("contact_data: byte7.0=%s", data[7] & 0b10000000)
-    _LOGGER.debug("contact_data: byte7.1=%s", data[7] & 0b01000000)
-    _LOGGER.debug("contact_data: byte7.2=%s", data[7] & 0b00100000)
-    _LOGGER.debug("contact_data: byte7.3=%s", data[7] & 0b00010000)
-    _LOGGER.debug("contact_data: byte7.4=%s", data[7] & 0b00001000)
-    _LOGGER.debug("contact_data: byte7.5=%s", data[7] & 0b00000100)
-    _LOGGER.debug("contact_data: byte7.6=%s", data[7] & 0b00000010)
-    _LOGGER.debug("contact_data: byte7.7=%s", data[7] & 0b00000001)
     return {
         "tested": bool(data[1] & 0b10000000),
         "motion_detected": bool(data[1] & 0b01000000),
