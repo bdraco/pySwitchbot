@@ -109,6 +109,15 @@ def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
     _LOGGER.debug("contact_data: %s", data)
     _LOGGER.debug("contact_data: byte0=%s", data[0])
     _LOGGER.debug("contact_data: byte1=%s", data[1])
+    _LOGGER.debug("contact_data: byte1.0=%s", data[1] & 0b10000000)
+    _LOGGER.debug("contact_data: byte1.1=%s", data[1] & 0b01000000)
+    _LOGGER.debug("contact_data: byte1.2=%s", data[1] & 0b00100000)
+    _LOGGER.debug("contact_data: byte1.3=%s", data[1] & 0b00010000)
+    _LOGGER.debug("contact_data: byte1.4=%s", data[1] & 0b00001000)
+    _LOGGER.debug("contact_data: byte1.5=%s", data[1] & 0b00000100)
+    _LOGGER.debug("contact_data: byte1.6=%s", data[1] & 0b00000010)
+    _LOGGER.debug("contact_data: byte1.7=%s", data[1] & 0b00000001)
+
     _LOGGER.debug("contact_data: byte2=%s", data[2])
     _LOGGER.debug("contact_data: byte3=%s", data[3])
     _LOGGER.debug("contact_data: byte3.0=%s", data[3] & 0b10000000)
@@ -135,7 +144,7 @@ def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
     _LOGGER.debug("contact_data: byte7.7=%s", data[7] & 0b00000001)
     return {
         "tested": bool(data[1] & 0b00000010),
-        "motion_detected": bool(data[1] & 0b00000100),
+        "motion_detected": bool(data[1] & 0b00001000),
         "battery": data[2] & 0b01111111,
         "contact_open": data[3] & 0b00000010 == 0b00000010,
         "contact_timeout": data[3] & 0b00000110 == 0b00000110,
