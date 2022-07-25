@@ -128,9 +128,9 @@ def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
         "tested": bool(data[1] & 0b00000010),
         "motion_detected": bool(data[1] & 0b00000100),
         "battery": data[2] & 0b01111111,
-        "door_open": data[3] & 0b01100000 == 0b01000000,
-        "door_timeout": data[3] & 0b01100000 == 0b01100000,
-        "is_light": bool(data[3] & 0b10000000),
+        "door_open": data[3] & 0b01100010 == 0b00000010,
+        "door_timeout": data[3] & 0b00000110 == 0b00000110,
+        "is_light": bool(data[3] & 0b00000001),
     }
 
 
