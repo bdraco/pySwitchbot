@@ -144,7 +144,7 @@ def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
     _LOGGER.debug("contact_data: byte7.7=%s", data[7] & 0b00000001)
     return {
         "tested": bool(data[1] & 0b00000010),
-        "motion_detected": bool(data[1] & 0b00001000),
+        "motion_detected": bool(data[1] & 0b01000000),
         "battery": data[2] & 0b01111111,
         "contact_open": data[3] & 0b00000010 == 0b00000010,
         "contact_timeout": data[3] & 0b00000110 == 0b00000110,
