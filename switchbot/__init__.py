@@ -131,7 +131,7 @@ def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
         "door_open": data[3] & 0b01100010 == 0b00000010,
         "door_timeout": data[3] & 0b00000110 == 0b00000110,
         "is_light": bool(data[3] & 0b00000001),
-        "button_count": bool(data[3] & 0b00001111),
+        "button_count": data[3] & 0b00001111,
     }
 
 
