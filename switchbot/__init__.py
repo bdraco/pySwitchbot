@@ -124,6 +124,15 @@ def _process_wocontactsensor(data: bytes) -> dict[str, bool | int]:
     _LOGGER.debug("contact_data: byte5=%s", data[5])
     _LOGGER.debug("contact_data: byte6=%s", data[6])
     _LOGGER.debug("contact_data: byte7=%s", data[7])
+
+    _LOGGER.debug("contact_data: byte7.0=%s", data[7] & 0b10000000)
+    _LOGGER.debug("contact_data: byte7.1=%s", data[7] & 0b01000000)
+    _LOGGER.debug("contact_data: byte7.2=%s", data[7] & 0b00100000)
+    _LOGGER.debug("contact_data: byte7.3=%s", data[7] & 0b00010000)
+    _LOGGER.debug("contact_data: byte7.4=%s", data[7] & 0b00001000)
+    _LOGGER.debug("contact_data: byte7.5=%s", data[7] & 0b00000100)
+    _LOGGER.debug("contact_data: byte7.6=%s", data[7] & 0b00000010)
+    _LOGGER.debug("contact_data: byte7.7=%s", data[7] & 0b00000001)    
     return {
         "tested": bool(data[1] & 0b00000010),
         "motion_detected": bool(data[1] & 0b00000100),
