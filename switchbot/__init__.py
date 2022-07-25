@@ -110,13 +110,11 @@ def _process_wocontactsensor(
     """Process woContactSensor/Contact Sensor services data."""
     return {
         "tested": bool(data[1] & 0b00000010),
-        "pir_state": bool(
-            data[1] & 0b00000100
-        ),  # PIR State 0: No one moves 1: Someone is moving
+        "motion_detected": bool(data[1] & 0b00000100), 
         "battery": data[2] & 0b01111111,
-        "hal_state": data[3]
-        & 0b01100000,  # Hal State 0:door close 1:door open 2:timeout not close
-        "is_light": data[3] & 0b10000000,
+        "door_open": data[3] & 0b01100000 == 0b00100000,
+        "door_timeout": data[3] & 0b01100000 == 0b01100000,
+        "is_light": bool(data[3] & 0b10000000),
     }
 
 
